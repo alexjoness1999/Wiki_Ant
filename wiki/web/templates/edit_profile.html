@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock title %}
+
+{% block content %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <table>
+            <tr>
+                <td>
+                    <p>{{ form.fname.label }}</p>
+                </td>
+                <td>
+                    <p>{{ form.fname(size=32) }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p>{{ form.lname.label }}</p>
+                </td>
+                <td>
+                    <p>{{ form.lname(size=32) }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p>{{ form.email.label }}</p>
+                </td>
+                <td>
+                    <p>{{ form.email(size=32) }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p>{{ form.phone.label }}</p>
+                </td>
+                <td>
+                    <p>{{ form.phone(size=32) }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p>{{ form.username.label }}</p>
+                </td>
+                <td>
+                    <p>{{ form.username(size=32) }}</p>
+                </td>
+                <td>
+                    <p>
+                        {% for error in form.username.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p>{{ form.password.label }}</p>
+                </td>
+                <td>
+                    <p>{{ form.password(size=32) }}</p>
+                </td>
+            </tr>
+        </table>
+        <p>
+            {{ form.submit() }}
+            <a href="{{ url_for('wiki.user_profile', username=current_user.username) }}">Cancel</a>
+        </p>
+    </form>
+{% endblock %}

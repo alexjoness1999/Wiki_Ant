@@ -1,0 +1,46 @@
+{
+  "dinhk1": {
+    "fname": "Khue",
+    "lname": "Dinh",
+    "email": "dinhk11@nku.edu",
+    "phone": "",
+    "active": true,
+    "roles": [],
+    "authentication_method": "cleartext",
+    "authenticated": true,
+    "password": "1234"
+  },
+  "luongt1": {
+    "fname": "Triet",
+    "lname": "Luong",
+    "email": "luongt1@nku.edu",
+    "phone": "8598667353",
+    "active": true,
+    "roles": [],
+    "authentication_method": "cleartext",
+    "authenticated": true,
+    "password": "1234"
+  },
+  "ben": {
+    "fname": "Ben",
+    "lname": "Lambert",
+    "email": "lambertb3@nku.edu",
+    "phone": null,
+    "active": true,
+    "roles": [],
+    "authentication_method": "cleartext",
+    "authenticated": false,
+    "password": "1234"
+  },
+  "john": {
+    "fname": "John",
+    "lname": "Scout",
+    "email": "jscout@123.com",
+    "phone": "1234",
+    "active": true,
+    "roles": [],
+    "authentication_method": "cleartext",
+    "authenticated": false,
+    "password": "123"
+  }
+}

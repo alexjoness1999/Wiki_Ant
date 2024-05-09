@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ page.title }}
+{% endblock title %}
+
+{% block content %}
+  <div id="confirmDelete" class="modal hide fade" aria-hidden="true">
+    <div class="modal-header">
+      <h3>Are you sure?</h3>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete {{ page.title }}?  This cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">No</a>
+      <a href="{{ url_for('wiki.delete', url=page.url) }}" class="btn btn-danger">Yes, delete.</a>
+    </div>
+  </div>
+    <div id="analytics" class="modal hide fade" aria-hidden="true">
+    <div class="modal-header">
+      <h3>Analytics for: {{ page.title }}</h3>
+    </div>
+    <div class="modal-body">
+
+      <canvas id="barGraph" width="400" height="300"></canvas>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <script>
+        fetch('/get_timestamps', {
+            method: 'POST',
+            body: JSON.stringify({ page: window.location.pathname }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+              const context = document.getElementById('barGraph').getContext('2d');
+              const labels = data.map(entry => entry.day);
+              const counts = data.map(entry => entry.count);
+
+              const chart = new Chart(context, {
+                  type: 'bar',
+                  data: {
+                      labels: labels,
+                      datasets: [{
+                        label: 'Page Views',
+                        data: counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                          yAxes: [{
+                              ticks: {
+                                  beginAtZero: true,
+                                  stepSize: 5
+                              }
+                          }]
+                      }
+                    }
+                });
+            });
+      </script>
+    </div>
+    <div class="modal-footer">
+
+      <p id="viewCount">test</p>
+
+      <script>
+        // Fetch page view
+        fetch('/get_view_count', {
+          method: 'POST',
+          body: JSON.stringify({ page: window.location.pathname }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+          if (data.error) {
+            console.error(data.error);
+          } else {
+            document.getElementById('viewCount').innerText = ("Total Views: " + data.view_count);
+          }
+        })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      </script>
+    </div>
+  </div>
+	{{ page }}
+{% endblock content %}
+
+{% block sidebar %}
+{% if page.tags %}
+<h3>Tags</h3>
+  <ul>
+      {% for tag in page.tags.split(',') %}
+        <li><a href="{{ url_for('wiki.tag', name=tag.strip()) }}">{{ tag|trim }}</a></li>
+      {% endfor %}
+  </ul>
+{% endif %}
+<h3>Actions</h3>
+<ul class="nav nav-tabs nav-stacked">
+	<li><a href="{{ url_for('wiki.edit', url=page.url) }}">Edit</a></li>
+  <li><a href="{{ url_for('wiki.move', url=page.url) }}">Move</a></li>
+  <li><a href="{{ url_for('wiki.download', url=page.url, format='txt') }}">Download as Text</a></li>
+    <li><a href="#" class="btn btn-link" onclick="generatePDF(); return false;" style="text-align: left;">Download as PDF</a></li>
+    <li><a href="#analytics" data-toggle="modal">View Analytics</a></li>
+  </ul>
+    <script type="text/javascript">
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("Title: {{ page.title }}", 10, 10);
+        doc.text("Body: {{ page.body }}", 10, 20);
+        const title = "{{ page.title }}";
+        const fileName = "wiki_" + title.substring(0, 10) + ".pdf";
+
+        doc.save(fileName);
+    }
+</script>
+{% endblock sidebar %}

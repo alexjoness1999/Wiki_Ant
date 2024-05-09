@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+<form class="form form-inline" method="POST">
+    {{ form.hidden_tag() }}
+    <table>
+        <tr>
+            <td>
+                <p>First Name:&emsp;</p>
+            </td>
+            <td>
+                <p>{{ form.fname(placeholder='First Name') }}</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p>Last Name:&emsp;</p>
+            </td>
+            <td>
+                <p>{{ form.lname(placeholder='Last Name') }}</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p>Email Address:&emsp;</p>
+            </td>
+            <td>
+                <p>{{ form.email(placeholder='Email') }}</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p>Username:</p>
+            </td>
+            <td>
+                <p>{{ form.username(placeholder='Username') }}</p>
+            </td>
+            <td>
+                <p>
+                    {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p>Password:</p>
+            </td>
+            <td>
+                <p>{{ form.password(placeholder='Password') }}</p>
+            </td>
+        </tr>
+    </table>
+
+	<p>
+        {{ form.submit() }}
+        <a href="{{ url_for('wiki.user_login') }}">Login</a>
+    </p>
+</form>
+{% endblock content %}

@@ -1,0 +1,4 @@
+title: Green Ant
+tags: green, ant, head
+
+The green-head ant (Rhytidoponera metallica) is a species of ant that is endemic to Australia. It was described by British entomologist Frederick Smith in 1858 as a member of the genus Rhytidoponera in the subfamily Ectatomminae. These ants measure between 5 and 7 mm (0.20 and 0.28 in). The queens and workers look similar, differing only in size, with the males being the smallest. They are well known for their distinctive metallic appearance, which varies from green to purple or even reddish-violet. Among the most widespread of all insects in Australia, green-head ants are found in almost every Australian state, but are absent in Tasmania. They have also been introduced in New Zealand, where several populations have been established.

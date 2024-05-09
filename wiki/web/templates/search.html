@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if search %}
+    Results for "{{ search }}"
+{% else %}
+    Search
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="span8 offset1">
+        <form class="form-inline well" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.term(placeholder='Search for.. (regex accepted)', autocomplete="off") }}
+
+            <!-- Search options -->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="search_option" id="search_by_tags" value="tags">
+                <label class="form-check-label" for="search_by_tags">Search by Tags</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="search_option" id="search_by_title" value="title">
+                <label class="form-check-label" for="search_by_title">Search by Title</label>
+            </div>
+
+            <div class="form-check">  <!-- New section for searching by body -->
+                <input class="form-check-input" type="radio" name="search_option" id="search_by_body" value="body">
+                <label class="form-check-label" for="search_by_body">Search by Body</label>
+            </div>
+
+            <!-- Ignore Case option -->
+            <div class="form-check">
+                {{ form.ignore_case() }}
+                <label class="form-check-label" for="ignore_case">Ignore Case</label>
+            </div>
+
+            <input type="submit" class="btn btn-success pull-right" value="Search!">
+        </form>
+    </div>
+</div>
+
+{% if search %}
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li><a href="{{ url_for('wiki.display', url=result.url) }}">{{ result.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results for your search.</p>
+    {% endif %}
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title -%}
+
+{% endblock title %}
+
+{% block content %}
+
+        <div id="portfolio">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+
+                    {% for image in images %}
+
+
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="#" title="Project Name">
+                            <img class="img-fluid" src="{{url_for('static', filename=image)}}" alt="{{image}}"/>
+
+                        </a>
+                    </div>
+                      {% endfor %}
+
+                </div>
+            </div>
+        </div>
+{% endblock %}
